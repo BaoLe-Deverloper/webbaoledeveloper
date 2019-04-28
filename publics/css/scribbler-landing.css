@@ -178,3 +178,27 @@ nav {
     font-size: 0.8rem;
   }
 }
+.btn-readmore{
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  float: right;
+  border:none;
+  border-radius: 5px;
+}
+
+.btn-readmore:hover{
+  background-color: aliceblue;
+ 
+
+  color: #000;
+}
+.feature_childen{
+  height: 200px;
+}
+#avatar{
+  height: 100px;
+  width:100px;
+  border-radius: 50%;
+}
+
+
+

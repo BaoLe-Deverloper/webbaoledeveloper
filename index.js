@@ -1,3 +1,4 @@
+/*====================Import module==================*/
 const express = require('express')
 const passport = require('passport')
 const cookieParser = require('cookie-parser');
@@ -6,10 +7,15 @@ const mongodb = require('./mongodb')
 const passport_fb = require('passport-facebook').Strategy
 const session = require('express-session')
 const bcrypt = require('bcrypt');
+const { body,validationResult } = require('express-validator/check');
+const { sanitizeBody } = require('express-validator/filter');
+
+const Admincontrollers = require("./controllers/admin");
+const Sitecontrollers = require("./controllers/site");
 
 const saltRounds = 10;
-
 const app = express();
+const generateSafeId = require('generate-safe-id');
 
 app.use(cookieParser());
 app.use(bodyParser());
@@ -19,54 +25,92 @@ app.set('view engine', 'ejs');
 app.use(session({secret:'31jda%4*/99=_)787'}))
 app.use(passport.initialize());
 app.use(passport.session());
+
 app.listen(3000,()=>console.log("server opened in port 3000"));
+/*==============================================================*/
+
+
+/*===================router for website =========================*/
+
 app.get('/', function (req, res) {
-  res.render("teamplate_site/index",{});
+ 
+  
+  res.render("teamplate_site/index",{user:session.user});
 })
-
-
 app.get('/doc',function(req,res,next){
   res.render("teamplate_site/doc",{});
 })
 
-app.get('/login',(req, res, next )=>{res.render('teamplate_site/login',{}) });
+app.get('/login',(req, res, next )=>{res.render('teamplate_site/login',{})});
 
-app.get('/auth/facebook', passport.authenticate("facebook",{scope:['email']}));
+app.get('/auth/facebook',Sitecontrollers.authfacebook);
 
-app.get('/auth/facebook/callbackfacebook', passport.authenticate('facebook',{
-  failureRedirect:'/',successRedirect:'/'
-}));
+app.get('/auth/facebook/callbackfacebook',Sitecontrollers.callbackfacebook,function(req, res) {
+  session.user = req.session.passport.user.name;
+  res.redirect('/');
+});
 
-passport.use(new passport_fb({
-  clientID: '2558575720823491',
-  clientSecret:'5b67fb63e7012b76606658e1d778f5b5',
-  callbackURL:'http://localhost:3000/auth/facebook/callbackfacebook',
-  profileFields:['email','name','gender','birthday','locale']
-},
-
-(accessToken,refreshToken,profile,done)=>{
- 
-   mongodb.findOne({id:profile._json.id},(err,user)=>{
-     if(err) return done(err);
-     if(user) return done(null, user);
-     var salt = bcrypt.genSaltSync(saltRounds);
-     const newUser = new mongodb({
-       id:profile._json.id,
-       name:profile._json.name,
-       email:profile._json.email,
-       password: bcrypt.hashSync(profile._json.id+profile._json.email, salt)
-     })
-     newUser.save((err)=>{ return done(null,user)})
-   })
-}
-))
-
-passport.serializeUser((user,done)=>{
-  done(null,user)
+app.post('/login',(req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      
+        }
+    else {
+      
+    }
+})
+app.get("/logout",(req,res)=>{
+  session.user = null;
+  res.redirect('/');
 })
 
-passport.deserializeUser((id,done)=>{
-    mongodb.findOne({id}, (err,user)=>{
-      done(null,user)
-    })
+app.get("/signup",(req,res)=>res.render("teamplate_site/signup"))
+
+/*==============================================================*/
+
+
+/*===============router for Admin_page =========================*/
+
+
+app.get('/admin/',(req,res,next)=>{
+
+  if(session.useradmin){
+   
+      mongodb.categories.find((err,result)=>{
+        mongodb.posts.find((err,resultP)=>{
+          res.render("admin/index",{categories :result,posts:resultP});
+        })
+      });
+
+    
+
+     
+      
+  }
+  else 
+    res.redirect("/admin/login");  
 })
+
+app.get("/admin/login", (req,res,next)=>{
+  res.render("admin/login",{});
+})
+
+app.post("/admin/login", Admincontrollers.login )
+
+app.post("/admin/addpost",(req,res)=>{
+
+  const newPost = new mongodb.posts({
+    id:generateSafeId(),
+    title:req.body.title,
+    body:req.body.content,
+    author:session.user,
+    categry:req.body.categry,
+    status:req.body.status? false:true,
+    viewcount:0
+  })
+  newPost.save((err)=>{
+    if(!err) res.redirect("/admin");
+  });
+})
+/*==============================================================*/
+

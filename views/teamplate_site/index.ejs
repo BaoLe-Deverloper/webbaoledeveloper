@@ -11,6 +11,7 @@
       <link rel="stylesheet" href="static/css/scribbler-global.css">
       <link rel="stylesheet" href="static/css/scribbler-landing.css">
       
+      
   </head>
   <body>
     <nav>
@@ -19,22 +20,28 @@
         <div class="menu__item toggle"><span></span></div>
         <li class="menu__item"><a href="/doc" class="link link--dark"><i class="fa fa-book"></i> Documentation</a></li>
         <li class="menu__item"><a href="" class="link link--dark"><i class="fa fa-github"></i> Github</a></li>
+        <% if (!user) { %>
         <li class="menu__item"><a href="login" class="link link--dark"><i class="fa fa-book"></i>Login/Signup</a></li>
+        <%}else{ %>
+          <li class="menu__item"><a href="" class="link link--dark"><i class="fa fa-user"></i><%=user%></a></li>
+          <% }%>
+
       </ul>
     </nav>
     <div class="hero">
-      <h1 class="hero__title">Scribbler</h1>
-      <p class="hero__description">Take your markdown notes in terminal</p>
+      <img src="static/images/avatar.jpg" id="avatar"/>
+      <h1 class="hero__title">Lê Văn Bảo</h1>
+      <p class="hero__description">Đam mê lập trình, muốn học hỏi nâng cao trình độ code</p>
     </div>
     <div class="hero__terminal">
       <pre>
         <!-- Place your demo code here -->
-        <code class="shell-session demo">hyperyolo ~ $ </code>
+        <code class="shell-session demo">@BaoleDeveloper~ $ </code>
       </pre>
     </div>
     <div class="wrapper">
       <div class="installation">
-        <h3 class="section__title">Installation</h3>
+        <h3 class="section__title">Lê Văn Bảo </h3>
         <div class="tab__container">
           <ul class="tab__menu">
             <li class="tab active" data-tab="mac">mac</li>
@@ -49,29 +56,45 @@
         </div>
       </div>
       <div class="feature">
+          <div class="feature__item">
+              <div class="feature_childen">
+                  <h3 class="section__title">Keybindings</h3>
+                  <p>You can expect common keybindings for scribbler. Customize <span class="code code--inline">bindings.json</span> for your own liking! </p>
+              </div>
+            
+              <button class="btn-readmore">Đọc thêm</button>
+          </div>
+          <div class="feature__item">
+                <div class="feature_childen">
+                    <h3 class="section__title">Keybindings</h3>
+                    <p>You can expect common keybindings for scribbler. Customize <span class="code code--inline">bindings.json</span> for your own liking! </p>
+                </div>
+              
+                <button class="btn-readmore">Đọc thêm</button>
+         </div>
+              <div class="feature__item">
+                  <div class="feature_childen">
+                      <h3 class="section__title">Keybindings</h3>
+                      <p>You can expect common keybindings for scribbler. Customize <span class="code code--inline">bindings.json</span> for your own liking! </p>
+                  </div>
+                
+                  <button class="btn-readmore">Đọc thêm</button>
+                </div>
+                <div class="feature__item">
+                    <div class="feature_childen">
+                        <h3 class="section__title">Keybindings</h3>
+                        <p>You can expect common keybindings for scribbler. Customize <span class="code code--inline">bindings.json</span> for your own liking! </p>
+                    </div>
+                  
+                    <button class="btn-readmore">Đọc thêm</button>
+                  </div>
         <div class="feature__item">
-          <h3 class="section__title">Fast & Light</h3>
-          <p>Start writing your notes immediately in any terminal! No more time wasted on navigating and opening your text editor.</p>
-        </div>
-        <div class="feature__item">
-          <h3 class="section__title">File Syncing</h3>
-          <p>Save your file in Dropbox then you can access to it from anywhere.</p>
-        </div>
-        <div class="feature__item">
-          <h3 class="section__title">Secure</h3>
-          <p>Encrypt your notes optionally. No one can get to your secrets! </p>
-        </div>
-        <div class="feature__item">
-          <h3 class="section__title">Configuration</h3>
-          <p>Maintain all your settings in a single <span class="code code--inline">config.json</span> file. Never need to redo the setting every single time jotting down a note.</p>
-        </div>
-        <div class="feature__item">
-          <h3 class="section__title">Highlightings</h3>
-          <p>For better readability, scribbler has a clean, beautiful color scheme allow you to scan files fast.</p>
-        </div>
-        <div class="feature__item">
-          <h3 class="section__title">Keybindings</h3>
-          <p>You can expect common keybindings for scribbler. Customize <span class="code code--inline">bindings.json</span> for your own liking! </p>
+          <div class="feature_childen">
+              <h3 class="section__title">Keybindings</h3>
+              <p>You can expect common keybindings for scribbler. Customize <span class="code code--inline">bindings.json</span> for your own liking! </p>
+          </div>
+        
+          <button class="btn-readmore">Đọc thêm</button>
         </div>
       </div>
       <div class="keybinding">
@@ -143,8 +166,11 @@
       </div>
     </div>
     <footer class="footer">Scribbler is a free HTML template created exclusively for <a href="https://tympanus.net/codrops/" target="_blank" class="link link--light">Codrops</a>.</footer>
+    <script src="static/js/jquery-3.4.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="static/js/main.js"></script>
     <script src="static/js/scribbler.js"></script>
   </body>
 </html>

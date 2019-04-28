@@ -12,15 +12,18 @@ var getAll = function (selector, scope) {
 // setup typewriter effect in the terminal demo
 if (document.getElementsByClassName('demo').length > 0) {
   var i = 0;
-  var txt = `scribbler
-            [Entry mode; press Ctrl+D to save and quit; press Ctrl+C to quit without saving]
+  var txt = `Lê Văn Bảo
+            [birthday:15/18/1998]
 
-            ###todo for new year dinner party
+            ###Address: viet_nam.
 
-            - milk
-            - butter
-            - green onion
-            - lots and lots of kiwis 🥝`;
+            ##$Skill
+            
+            - c# winform, Asp.net mvc, .Net core
+            - nodejs,php (begginer)
+            - Sql server, Mysql, Mongodb
+            - html,css,js,angular,angularjs,
+            - ajax, signalr;`
   var speed = 60;
 
   function typeItOut () {
