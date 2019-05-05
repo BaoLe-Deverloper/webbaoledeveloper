@@ -60,10 +60,10 @@ window.addEventListener("load", function() {
       tabs[i].classList.remove('active');
     }
 
-    // remove all active pane classes
-    for (var i = 0; i < panes.length; i++) {
-      panes[i].classList.remove('active');
-    }
+    // // remove all active pane classes
+    // for (var i = 0; i < panes.length; i++) {
+    //   panes[i].classList.remove('active');
+    // }
 
     // apply active classes on desired tab and pane
     clickedTab.classList.add('active');

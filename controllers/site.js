@@ -1,52 +1,51 @@
-const cookieParser = require('cookie-parser');
-const bodyParser  = require('body-parser')
-const mongodb = require('./../mongodb')
-const session = require('express-session')
-const bcrypt = require('bcrypt');
-const { body,validationResult } = require('express-validator/check');
-const { sanitizeBody } = require('express-validator/filter');
-const passport = require('passport')
-const passport_fb = require('passport-facebook').Strategy
+
+const post = require('./../models/post');
+module.exports.login_get =  (req, res, next) => { 
+res.render('teamplate_site/login', {	error : req.flash("error"),
+success: req.flash("success"),
+session:req.session
+})};
+
+module.exports.signup_get = (req, res) => {
+
+	if (req.session.user) {
+
+		res.redirect('/home');
+
+	} else {
+
+		res.render('teamplate_site/signup', {
+			error : req.flash("error"),
+			success: req.flash("success"),
+			session:req.session
+		});
+	}
+
+};
+module.exports.home_get = (req, res) => {
+
+  res.render("teamplate_site/index", { 
+    user: req.session.user,
+    error : req.flash("error"),
+    success: req.flash("success")
+   });
+};
+
+module.exports.doc_get = (req, res,next) =>{
 
 
-module.exports.callbackfacebook = passport.authenticate('facebook', {failureRedirect: '/login' });
+	let id = req.params.url ;
+	post.findOne(url,(error,post)=>{
+		if(error)
+		res.status(404).render('404');
+		else
+	  	res.render("teamplate_site/doc", {post:post});	
+	})
+	console.log(id);
+ 
+};
 
-
-module.exports.authfacebook =  passport.authenticate("facebook",{scope:['email']});
-
- /*==============facebook authentication =======================*/
- passport.use(new passport_fb({
-    clientID: '2558575720823491',
-    clientSecret:'5b67fb63e7012b76606658e1d778f5b5',
-    callbackURL:'http://localhost:3000/auth/facebook/callbackfacebook',
-    profileFields:['email','name','gender','birthday','locale']
-  },
-  
-  (accessToken,refreshToken,profile,done)=>{
-   
-     mongodb.user.findOne({id:profile._json.id},(err,user)=>{
-       
-       if(err) return done(err);
-       if(user) return done(null, user);
-       var salt = bcrypt.genSaltSync(saltRounds);
-       const newUser = new mongodb.user({
-         id:profile._json.id,
-         name:profile._json.name||profile._json.last_name+' '+profile._json.first_name,
-         email:profile._json.email,
-         password: bcrypt.hashSync(profile._json.id+profile._json.email, salt)
-       })
-       newUser.save((err)=>{ return done(null,user)})
-     })
-  }
-  ))
-  
-  passport.serializeUser((user,done)=>{
-    done(null,user)
-  })
-  
-  passport.deserializeUser((id,done)=>{
-      mongodb.user.findOne({id}, (err,user)=>{
-        done(null,user)
-      })
-  })
-  /*=======================================================*/
+module.exports.logout_get =  (req, res) => {
+  req.session.user = null;
+  res.redirect('/');
+};

@@ -45,13 +45,17 @@ nav {
 
 /* feature section */
 .feature {
+  padding-top:40px ;
   display: flex;
   flex-wrap: wrap;
 }
 
 .feature__item {
   max-width: calc(33% - 20px);
-  margin: 0 20px 0 0;
+  margin: 20px 20px 0 0;
+  padding: 20px;
+  background-color: #b6b2b2;
+
 }
 
 .feature__item .section__title {

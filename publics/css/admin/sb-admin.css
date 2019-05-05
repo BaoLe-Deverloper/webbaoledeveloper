@@ -10690,35 +10690,35 @@ body {
   color: #777;
 }
 
-footer.sticky-footer {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  width: calc(100% - 90px);
+footer._footer {
+ 
   height: 80px;
   background-color: #e9ecef;
 }
 
-footer.sticky-footer .copyright {
+footer._footer.copyright {
   line-height: 1;
   font-size: 0.8rem;
 }
 
 @media (min-width: 768px) {
-  footer.sticky-footer {
+  footer._footer {
     width: calc(100% - 225px);
   }
 }
 
-body.sidebar-toggled footer.sticky-footer {
+body.sidebar-toggled footer._footer{
   width: 100%;
 }
 
 @media (min-width: 768px) {
-  body.sidebar-toggled footer.sticky-footer {
+  body.sidebar-toggled footer._footer {
     width: calc(100% - 90px);
   }
+}
+.dateCreate{
+  margin: 20px;
+  bottom: 0px;
+  display: block;
+  position: absolute;
 }

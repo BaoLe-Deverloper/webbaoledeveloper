@@ -11,22 +11,22 @@ html, body {
       background-color: #252525;
       margin: 50px auto;
       border-radius: 10px;
-      padding: 40px;
+      padding: 20px 40px;
       text-align: center;
   }
 h4{
       color: #fff;
   }
   .form_login{
-      margin-top: 50px;
-      margin-bottom: 50px;
+      margin-top: 25px;
+      margin-bottom: 20px;
       text-align: center;
   }
   span{
       color: #fff;
   }
   .link_redirect{
-      margin-top:20px;
+      margin-top:10px;
       font-size:14px;
       color:#fff;
       
