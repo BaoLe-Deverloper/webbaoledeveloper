@@ -1,5 +1,6 @@
 
 const post = require('./../models/post');
+const category = require('./../models/category');
 module.exports.login_get =  (req, res, next) => { 
 res.render('teamplate_site/login', {	error : req.flash("error"),
 success: req.flash("success"),
@@ -49,3 +50,18 @@ module.exports.logout_get =  (req, res) => {
   req.session.user = null;
   res.redirect('/');
 };
+
+module.exports.getCategories = (req,res)=>{
+	
+    category.find({parent:req.params.id},(err,result)=>{
+		if(!err){
+          res.status(200).send(result);
+		}else{
+		  res.status(404).send("error system !")
+		}
+	})
+}
+module.exports.Active_account =(req,res)=>{
+
+	console.log(req.params.email+ '  ' +req.params.active_link);
+}

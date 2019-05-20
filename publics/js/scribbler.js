@@ -10,7 +10,7 @@ var getAll = function (selector, scope) {
 };
 
 // setup typewriter effect in the terminal demo
-if (document.getElementsByClassName('demo').length > 0) {
+if (document.getElementsByClassName('code_run').length > 0) {
   var i = 0;
   var txt = `Lê Văn Bảo
             [birthday:15/18/1998]
@@ -28,7 +28,7 @@ if (document.getElementsByClassName('demo').length > 0) {
 
   function typeItOut () {
     if (i < txt.length) {
-      document.getElementsByClassName('demo')[0].innerHTML += txt.charAt(i);
+      document.getElementsByClassName('code_run')[0].innerHTML += txt.charAt(i);
       i++;
       setTimeout(typeItOut, speed);
     }
@@ -37,6 +37,51 @@ if (document.getElementsByClassName('demo').length > 0) {
   setTimeout(typeItOut, 1800);
 }
 
+
+function get_Categories(name){
+  $.ajax({
+    url:"/api/getCategories/"+name,
+    type:"get",
+    dataType:"json",
+    success : function(res)
+    {
+      if(res){
+     
+        let cates = [];
+        res.forEach(element => {
+          let item = ` <div class="feature__item">
+            <div class="feature_childen" >
+              <div class="feature_image">
+                <img src="`+element.picture+`">
+              </div>
+            
+              <h3 class="section__title">`+element.name+`</h3>
+              <div class="block-content">
+                <div class="d-inline-block mr-10">
+                  <i class="fa fa-book"></i>
+                    <strong>`+element.number_Posts+`</strong> bài học
+                </div>
+                <div class="d-inline-block">
+                  <i class="fa fa-eye"></i>
+                    <strong>`+element.view+`</strong> lượt xem
+                </div>
+              </div>
+              <div class="group_btnMore">
+              
+            </div>
+              <button class="btn-readmore">Đọc thêm</button>
+              </div>
+              </div>
+             
+         
+        </div>`;
+        cates.push(item);
+        });
+        $('.feature').html(cates);
+      }
+    }
+  })
+}
 // toggle tabs on codeblock
 window.addEventListener("load", function() {
   // get all tab_containers in the document
@@ -46,7 +91,7 @@ window.addEventListener("load", function() {
   for (var i = 0; i < tabContainers.length; i++) {
     get('.tab__menu', tabContainers[i]).addEventListener("click", tabClick);
   }
-
+  get_Categories("lang");
   // each click event is scoped to the tab_container
   function tabClick (event) {
     var scope = event.currentTarget.parentNode;
@@ -59,7 +104,8 @@ window.addEventListener("load", function() {
     for (var i = 0; i < tabs.length; i++) {
       tabs[i].classList.remove('active');
     }
-
+    get_Categories(clickedTab.getAttribute('data-tab'));
+    
     // // remove all active pane classes
     // for (var i = 0; i < panes.length; i++) {
     //   panes[i].classList.remove('active');
@@ -67,7 +113,9 @@ window.addEventListener("load", function() {
 
     // apply active classes on desired tab and pane
     clickedTab.classList.add('active');
-    activePane.classList.add('active');
+    //activePane.classList.add('active');
+
+    
   }
 });
 

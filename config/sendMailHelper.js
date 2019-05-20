@@ -4,11 +4,15 @@ var constants = require('./constants');
 
 var transporter = nodemailer.createTransport(smtpTransport({
     host: constants.email_smtp_host,
-    port: constants.email_smtp_port,
+		port: constants.email_smtp_port,
+		auth: {
+			user: "baolerussia@gmail.com",
+			pass: "15081998"
+	}
 }));
 
 
-exports.activate_email = function(user_name,email,acitvate_link) {
+module.exports.activate_email = function(user_name,email,acitvate_link) {
 	
 
 	var email_data = `<!doctype html>
@@ -259,14 +263,14 @@ exports.activate_email = function(user_name,email,acitvate_link) {
 	<!-- /footer -->
 
 	</body>
-	</html>`
+	</html>`;
 	
 	
 	// setup e-mail data with unicode symbols
 	var mailOptions = {
 	    from: '"'+constants.smtp_from_name+'" <'+constants.smtp_from_eamil+'>', // sender address
 	    to: email, // list of receivers
-	    subject: 'express-mvc-generator Account Acitvation', // Subject line
+	    subject: 'Baole_developer Account Acitvation', // Subject line
 	    html: email_data
 	};
 	
@@ -276,7 +280,7 @@ exports.activate_email = function(user_name,email,acitvate_link) {
 	    if (error) {
 	        return console.log(error);
 	    }
-	    
+			return console.log("ok");
 	});
 
   

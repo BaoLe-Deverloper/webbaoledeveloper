@@ -8,10 +8,11 @@ const session = require('express-session')
 const bcrypt = require('bcrypt');
 const path = require('path');
 const flash = require('connect-flash');
-
+const multer = require('multer');
 const saltRounds = 10;
 const app = express();
 const generateSafeId = require('generate-safe-id');
+
 
 app.set('port',process.env.post||3000);
 app.disable('x-powered-by');
@@ -23,6 +24,15 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }));
+var storage =   multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, './publics/uploads');
+  },
+  filename: function (req, file, callback) {
+    callback(null, file.fieldname + '-' + Date.now()+".png");
+  }
+});
+var upload = multer({ storage: storage })
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -32,7 +42,7 @@ app.set('views', path.join(__dirname,'views'));
 app.set('view engine', 'ejs');
 app.use(flash()); 
 require('./config/passport')(passport);
-require('./config/routers')(app, passport);
+require('./config/routers')(app, passport,upload);
 
 app.listen( app.get('port'),()=>console.log("server opened in port " +app.get('port')));
 /*==============================================================*/

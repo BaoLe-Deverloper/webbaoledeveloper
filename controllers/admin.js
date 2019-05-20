@@ -50,6 +50,7 @@ module.exports.createPosts_post = (req, res) => {
   let url = req.body.url;
   let dateCreate =  req.body.dateCreate;
 
+
   let newPost = new post({
     title:title,
     url:url,
@@ -134,14 +135,19 @@ module.exports.addOrUpdate_category = (req, res) => {
   let parent = req.body.parent;
   let key = req.body.key;
   let name = req.body.name;
+  let picture = req.body.picture;
+  let number_Posts = req.body.number_Posts;
+  let view = req.body.view;
+
   if (id) {
-    category.findByIdAndUpdate(id, { "key": key,"parent":parent, "name": name }, (err, result) => {
+    category.findByIdAndUpdate(id, { "key": key,"picture":picture,"parent":parent, "name": name ,"number_Posts":number_Posts,'view':view}, (err, result) => {
       if (!err)
       res.redirect('/admin');
     })
   } else {
     let newCategory = new category({
       "key": key,
+      "picture":picture,
       "parent":parent,
       "name": name
     })
@@ -154,6 +160,9 @@ module.exports.addOrUpdate_category = (req, res) => {
   }
 } 
 
+
+
+
 module.exports.getCategory_byID = (req,res)=>{
 
   category.findById(req.body.id,(err, result)=>{
@@ -161,4 +170,36 @@ module.exports.getCategory_byID = (req,res)=>{
     if(!err)
       res.send(result);
   });
+}
+
+module.exports.getListImages = (req,res)=>{
+
+      //requiring path and fs modules
+      var path = require('path');
+      var fs = require('fs');
+      //joining path of directory 
+      var directoryPath = path.join(__dirname.replace("controllers",""), 'publics/uploads');
+      //passsing directoryPath and callback function
+      fs.readdir(directoryPath, function (err, files) {
+          //handling error
+          if (err) {
+              res.status(500).send('Unable to scan directory: ' + err);
+          } else
+             res.status(200).send(files);
+         
+      });
+}
+
+module.exports.delete_img = (req,res)=>{
+ 
+   //requiring path and fs modules
+   var path = require('path');
+   var fs = require('fs');
+   //joining path of directory 
+   var directoryPath = path.join(__dirname.replace("controllers",""), 'publics/uploads/'+req.body.name);
+   fs.unlink(directoryPath,(err)=>{
+     if(!err)
+        res.send(true);
+   })
+ 
 }

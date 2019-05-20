@@ -45,6 +45,8 @@ hr {
 
 /* typography */
 .section__title {
+  text-align: center;
+  padding-bottom: 20px;
   color: var(--primary-color);
 }
 
@@ -54,7 +56,7 @@ hr {
 }
 
 .tab__container > ul {
-  position: absolute;
+ /* position: absolute;*/
   list-style: none;
   margin: 0;
   right: 1rem;

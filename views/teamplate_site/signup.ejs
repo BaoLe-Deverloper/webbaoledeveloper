@@ -1,88 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login - Baole Developer</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="static/font-awesome-4.7.0/css/font-awesome.min.css">
-    
+
     <link rel="stylesheet" href="static/css/login_page.css">
-    
+
 </head>
+
 <body>
-   <div class="container">
+    <div class="container">
         <div class="login">
-                <div class="login-form">
-                    <br/>
-                   
-                   <h4 class="text-center">SigUp Website</h4>
+            <div class="login-form">
+                <br />
 
+                <h4 class="text-center">SigUp Website</h4>
+                <div class="messager">
                 <% if (error.length > 0) { %>
-		           <div class="alert alert-danger"><%- error %></div>
-	         	<% } %>
-		
-		        <% if (success.length > 0) { %>
-		           <div class="alert alert-success"><%- success %></div>
-		        <% } %>
-                   <form action="/signup" method="POST" class="form_login"  role="form" >
+                <div class="alert alert-danger"><%- error %></div>
+                <% } %>
 
-                        <div class="form-group">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
-                                </div>
-                                <input name="username" class="form-control" placeholder="Username..." aria-label="Username" aria-describedby="basic-addon1" type="text">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
-                                </div>
-                                <input name="email" class="form-control" placeholder="Email...." aria-describedby="basic-addon1" type="email">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-unlock-alt"></i></span>
-                                    </div>
-                                    <input name="password"  class="form-control" placeholder="Password....." aria-describedby="basic-addon1" type="password">
-                                </div>
-                       </div>
-                       <div class="form-group">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1"><i class="fa fa-unlock-alt"></i></span>
-                                </div>
-                                <input class="form-control" placeholder="Cofirm Password" aria-describedby="basic-addon1" type="password">
-                            </div>
-                        </div>
-                       <br/>
-                       <div class="form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" value="" type="checkbox">
-                                <span class="form-check-sign">Remember my account .</span>
-                            </label>
-                        </div>
-                        <br/>
-                       <button type="submit" class="btn btn-success text-center"> Đăng kí </button>
-                     
-                   </form>
-        
-                   <a href="/auth/facebook" class="btn btn-primary text-center"><i class="fa fa-facebook-f"></i> Login with Facebook </a>
-                 
-                   <div class="link_redirect">
-                        <a href="/login">Go To Login</a>
-                   </div>
-                  
+                <% if (success.length > 0) { %>
+                <div class="alert alert-success"><%- success %></div>
+                <% } %>
                 </div>
-            </div>
-   </div>
-   
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+                <form action="/signup" method="POST" class="form_login" role="form">
 
+                    <div class="form-group">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
+                            </div>
+                            <input name="username" class="form-control" placeholder="Username..." aria-label="Username"
+                                required aria-describedby="basic-addon1" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
+                            </div>
+                            <input name="email" class="form-control" placeholder="Email...."
+                                aria-describedby="basic-addon1" type="email" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fa fa-unlock-alt"></i></span>
+                            </div>
+                            <input name="password"  id="password" class="form-control" placeholder="Password....."
+                                aria-describedby="basic-addon1" type="password" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fa fa-unlock-alt"></i></span>
+                            </div>
+                            <input id="password_confirm" class="form-control" placeholder="Cofirm Password"
+                                aria-describedby="basic-addon1" type="password" required>
+                        </div>
+                    </div>
+
+                    <br />
+
+                    <div class="g-recaptcha" data-sitekey="6LeHEaMUAAAAAHF-XyZLjF19ne1vXdAQX9aSLORP"></div><br>
+                    <button type="submit" class="btn btn-success text-center"> Đăng kí </button>
+
+                </form>
+                <div class="link_redirect">
+                    <a href="/login">Go To Login</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="static/js/jquery-3.4.0.min.js"></script>
+    <script src='https://www.recaptcha.net/recaptcha/api.js'></script>
+    <script>
+
+    $('#password_confirm').focus(function(){
+           $('#password_confirm').css("border-color","white");
+
+    })
+    $('.form_login').on("submit",function () {
+     if($('#password').val().lenght<8)
+         {
+
+          $('.messager').html('<div class="alert alert-danger">Mật khẩu ngắn tối thiểu 8 chư cái</div>');
+          return false;
+      }
+      if($('#password_confirm').val()!==$('#password').val())
+      {
+          $('#password_confirm').css("border-color","red");
+          $('.messager').html('<div class="alert alert-danger">Lỗi Xác nhận Mật Khẩu</div>');
+          return false;
+      }
+     })
+
+    </script>
 </body>
+
 </html>

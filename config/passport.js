@@ -31,31 +31,31 @@ module.exports = function (passport) {
     callbackURL: constants.callbackURL,
     profileFields: ['email', 'name', 'gender', 'birthday', 'locale']
   },
-     (accessToken, refreshToken, profile, done) => {
+    (accessToken, refreshToken, profile, done) => {
 
       User.findOne({ _id: profile._json.id }, (err, user) => {
 
         if (err) return done(err);
-        if (user){
-        
+        if (user) {
+
           return done(null, user);
-        } 
+        }
         // var salt = bcrypt.genSaltSync(saltRounds);
         var day = dateFormat(Date.now(), "yyyy-mm-dd HH:MM:ss");
         const newUser = new User({
-          _id: profile._json.id ,
-          mail : profile._json.email,
-          password : null,
+          _id: profile._json.id,
+          mail: profile._json.email,
+          password: null,
           name: profile._json.name || profile._json.last_name + ' ' + profile._json.first_name,
-          created_date : day,
-          updated_date : day,
-          status : 'active',
-          active_hash : "Auth_Facebook"
+          created_date: day,
+          updated_date: day,
+          status: 'active',
+          active_hash: "Auth_Facebook"
         })
-        newUser.save((err) => { 
-          
-           return done(null, newUser) ;
-          })
+        newUser.save((err) => {
+
+          return done(null, newUser);
+        })
       })
     }
   ));
@@ -73,6 +73,26 @@ module.exports = function (passport) {
     passReqToCallback: true // allows us to pass back the entire request to the callback
   },
     (req, email, password, done) => {
+
+      // // g-recaptcha-response is the key that browser will generate upon form submit.
+      // // if its blank or null means user has not selected the captcha, so return the error.
+      // if (req.body['g-recaptcha-response'] === undefined || req.body['g-recaptcha-response'] === '' || req.body['g-recaptcha-response'] === null) {
+      //   return done(null, false, req.flash('error',  "Please select captcha"));
+      // }
+      // // Put your secret key here.
+      // var secretKey = "6LeHEaMUAAAAAOPo-Ya6-3e6zGN7wtjlIL_l0zpT";
+      // // req.connection.remoteAddress will provide IP address of connected user.
+      // var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + secretKey + "&response=" + req.body['g-recaptcha-response'] + "&remoteip=" + req.connection.remoteAddress;
+      // // Hitting GET request to the URL, Google will respond with success or error scenario.
+      // request(verificationUrl, function (error, response, body) {
+      //   body = JSON.parse(body);
+      //   // Success will be true or false depending upon captcha validation.
+      //   if (body.success !== undefined && !body.success) {
+      //     return done(null, false, req.flash('error',   "Failed captcha verification" ));
+      //   }
+        
+      // });
+
       // asynchronous
       // User.findOne wont fire unless data is sent back
       process.nextTick(function () {
@@ -109,23 +129,22 @@ module.exports = function (passport) {
               newUser.name = req.body.username;
               newUser.created_date = day;
               newUser.updated_date = day;
-              newUser.status = 'active'; //inactive for email actiavators
+              newUser.status = 'No_active'; //inactive for email actiavators
               newUser.active_hash = active_code;
-            
+
 
 
               // save the user
               newUser.save(function (err) {
                 if (err)
                   throw err;
-
-                /*  var email            = require('../lib/email.js');
-                  email.activate_email(req.body.username,req.body.email,active_code);
-                                      return done(null, newUser,req.flash('success', 'Account Created Successfully,Please Check Your Email For Account Confirmation.'));
-                  */
-                return done(null, newUser, req.flash('success', 'Account Created Successfully'));
-
-                req.session.destroy();
+                console.log('ok0');
+                var email = require('./sendMailHelper');
+            
+                email.activate_email(req.body.username, email, active_code);
+                var email = require('./sendMailHelper');
+                return done(null, newUser, req.flash('success', 'Account Created Successfully,Please Check Your Email For Account Confirmation.'));
+                //req.session.destroy();
 
               });
 
@@ -164,8 +183,8 @@ module.exports = function (passport) {
         // if no user is found, return the message
         if (!user)
           return done(null, false, req.flash('error', 'Sorry Your Account Not Exits ,Please Create Account.')); // req.flash is the way to set flashdata using connect-flash
-       if (!user.password)
-          return done(null, false, req.flash('error', 'Sorry your email has been verified by facebook!' ));
+        if (!user.password)
+          return done(null, false, req.flash('error', 'Sorry your email has been verified by facebook!'));
 
         // if the user is found but the password is wrong
         if (!user.validPassword(password))
